@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ClipboardList, X } from "lucide-react";
 
 interface JobDescriptionModalProps {
   isOpen: boolean;
@@ -22,18 +23,16 @@ export const JobDescriptionModal: React.FC<JobDescriptionModalProps> = ({
       <div className="bg-white rounded-xl border border-border-200 shadow-xl w-full max-w-lg p-6 flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-brand-600 text-[20px]">
-              assignment
-            </span>
+            <ClipboardList size={20} className="text-brand-600" />
             <h3 className="font-headline-sm font-semibold text-ink-900">
               Attach Job Description Benchmark
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="text-ink-500 hover:text-ink-900 p-1 rounded-md transition-colors"
+            className="text-ink-500 hover:text-ink-900 p-1 rounded-md transition-colors cursor-pointer"
           >
-            <span className="material-symbols-outlined text-[18px]">close</span>
+            <X size={18} />
           </button>
         </div>
 

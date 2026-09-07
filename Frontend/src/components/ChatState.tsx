@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { ResumeData, ChatMessage } from "../types";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Quote } from "lucide-react";
+import { Quote, FileText, X, Menu, FileUp, BarChart3, CheckCircle2, MessageSquare, ArrowRight, ShieldCheck, ArrowUp } from "lucide-react";
 import { motion, animate, useMotionValue, useTransform } from "motion/react";
 import { TiltCard } from "./TiltCard";
 
@@ -112,9 +112,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
       {/* Mobile Header */}
       <div className="lg:hidden flex items-center justify-between p-4 bg-white border-b border-border-200 z-30 shrink-0 shadow-sm">
         <div className="flex items-center gap-2">
-           <span className="material-symbols-outlined text-brand-600 text-[20px]">
-             description
-           </span>
+           <FileText size={20} className="text-brand-600 shrink-0" />
            <span className="font-semibold text-ink-900 text-sm truncate max-w-50">
              {resume.filename}
            </span>
@@ -123,9 +121,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           className="text-ink-500 hover:text-ink-900 bg-surface-100 p-1.5 rounded-lg flex items-center justify-center transition-colors cursor-pointer"
         >
-          <span className="material-symbols-outlined text-[20px]">
-            {isSidebarOpen ? "close" : "menu"}
-          </span>
+          {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
@@ -145,9 +141,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
           {/* Document Dossier Card */}
           <div className="bg-white rounded-xl p-4 border border-border-200 shadow-[0_8px_24px_rgba(15,23,42,0.05)] flex items-center gap-3 mb-6 transition-all hover:border-brand-600/30 group">
             <div className="w-10 h-10 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
-              <span className="material-symbols-outlined text-brand-600 text-[22px]">
-                description
-              </span>
+              <FileText size={22} className="text-brand-600" />
             </div>
             <div className="flex flex-col min-w-0 flex-1">
               <div className="flex items-center justify-between gap-2">
@@ -175,9 +169,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
             className="w-full mt-2 mb-4 py-2 px-3 rounded-lg border border-border-200 hover:border-ink-300 bg-white hover:bg-surface-100 text-ink-900 shadow-none transition-all flex items-center justify-center gap-2 font-label-regular text-label-regular font-medium cursor-pointer"
             type="button"
           >
-            <span className="material-symbols-outlined text-brand-600 text-[18px]">
-              upload_file
-            </span>
+            <FileUp size={18} className="text-brand-600" />
             <span>Upload another resume</span>
           </button>
 
@@ -190,9 +182,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
                 Document Insights
               </span>
               <div className="w-9 h-9 rounded-lg bg-surface-100 flex items-center justify-center text-ink-500">
-                <span className="material-symbols-outlined text-[18px]">
-                  analytics
-                </span>
+                <BarChart3 size={18} />
               </div>
             </div>
             <div className="flex flex-col gap-3">
@@ -286,9 +276,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
           {jobDescription && (
             <div className="bg-brand-50 rounded-xl p-3.5 text-[13px] text-ink-900 flex items-center justify-between gap-3">
               <div className="flex items-center gap-2 min-w-0">
-                <span className="material-symbols-outlined text-brand-600 text-[18px]">
-                  verified
-                </span>
+                <CheckCircle2 size={18} className="text-brand-600 shrink-0" />
                 <span className="truncate">
                   Benchmarked against attached Job Requirements
                 </span>
@@ -306,7 +294,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
           {messages.length === 0 && (
             <div className="my-auto flex flex-col items-center text-center max-w-2xl mx-auto py-3 sm:py-6 px-3 sm:px-4 w-full relative z-10">
               <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full border-2 border-intel-600 bg-brand-50 flex items-center justify-center text-brand-600 mb-2 sm:mb-3 shadow-none">
-                <span className="material-symbols-outlined text-[20px] sm:text-[24px]">chat_bubble</span>
+                <MessageSquare size={22} />
               </div>
               <h3 className="font-headline-sm font-bold text-ink-900 text-[15px] sm:text-[18px] mb-0.5 sm:mb-1">
                 Ask about {resume.candidateName || "this resume"}
@@ -328,9 +316,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
                     }`}
                   >
                     <span className="font-medium leading-snug line-clamp-3">{inquiry}</span>
-                    <span className="material-symbols-outlined text-brand-600 text-[15px] sm:text-[18px] opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0">
-                      arrow_forward
-                    </span>
+                    <ArrowRight size={16} className="text-brand-600 opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0" />
                   </TiltCard>
                 ))}
               </div>
@@ -379,9 +365,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
                       <span className="font-label-micro text-label-micro text-ink-500 font-medium">
                         {msg.matchPercentage}% match
                       </span>
-                      <span className="material-symbols-outlined text-brand-600 text-[13px]">
-                        verified_user
-                      </span>
+                      <ShieldCheck size={14} className="text-brand-600" />
                     </div>
                   </div>
                 )}
@@ -441,9 +425,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
             title="Synthesize Inquiry"
             className="w-10 h-10 bg-linear-to-br from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-700 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] text-white rounded-lg flex items-center justify-center transition-all shrink-0 shadow-[0_2px_4px_rgba(217,119,6,0.2)] font-bold hover:-translate-y-px"
           >
-            <span className="material-symbols-outlined text-[20px] font-bold">
-              arrow_upward
-            </span>
+            <ArrowUp size={20} strokeWidth={2.5} />
           </button>
         </footer>
       </section>

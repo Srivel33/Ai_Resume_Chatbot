@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ResumeData } from "../types";
 import { motion } from "motion/react";
 import { TiltCard } from "./TiltCard";
+import { FileText, FileUp, Cpu } from "lucide-react";
 
 interface StepProps {
   label: string;
@@ -168,9 +169,7 @@ export const IndexingState: React.FC<IndexingStateProps> = ({
           {/* File Card */}
           <div className="bg-white rounded-xl p-5 border border-border-200 shadow-[0_1px_3px_rgba(15,23,42,0.04)] flex items-center gap-3.5 mb-3">
             <div className="w-9 h-9 shrink-0 rounded-lg bg-brand-50 flex items-center justify-center text-brand-600">
-              <span className="material-symbols-outlined text-[20px] text-brand-600">
-                description
-              </span>
+              <FileText size={20} className="text-brand-600" />
             </div>
             <div className="flex flex-col min-w-0">
               <span className="font-body-md font-semibold text-ink-900 truncate">
@@ -187,9 +186,7 @@ export const IndexingState: React.FC<IndexingStateProps> = ({
             className="w-full flex items-center justify-center gap-2 mb-4 sm:mb-8 py-2 px-3 border border-border-200 hover:border-ink-300 text-ink-900 hover:bg-surface-100 rounded-lg font-label-regular transition-colors bg-white cursor-pointer"
             type="button"
           >
-            <span className="material-symbols-outlined text-[18px] text-brand-600">
-              upload_file
-            </span>
+            <FileUp size={18} className="text-brand-600" />
             <span className="font-medium">Upload another resume</span>
           </button>
 
@@ -269,9 +266,7 @@ export const IndexingState: React.FC<IndexingStateProps> = ({
               transition={{ duration: 2, ease: "easeInOut", repeat: Infinity }}
               className="relative flex items-center justify-center z-10"
             >
-              <span className="material-symbols-outlined text-intel-600 text-[22px]">
-                memory
-              </span>
+              <Cpu size={24} className="text-intel-600" />
             </motion.div>
           </div>
 

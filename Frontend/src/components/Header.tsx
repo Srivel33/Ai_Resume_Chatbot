@@ -1,5 +1,6 @@
 import React from "react";
 import { AppScreen } from "../types";
+import { FileText, Sparkles } from "lucide-react";
 
 interface HeaderProps {
   currentScreen: AppScreen;
@@ -18,14 +19,9 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="flex items-center gap-2.5">
         <div
           id="brand-logo"
-          className="w-7 h-7 rounded-md bg-brand-600 flex items-center justify-center shrink-0 shadow-none"
+          className="w-7 h-7 rounded-md bg-brand-600 flex items-center justify-center shrink-0 shadow-none text-white"
         >
-          <span
-            className="material-symbols-outlined text-white text-[16px]"
-            style={{ fontVariationSettings: "'FILL' 0, 'wght' 500" }}
-          >
-            description
-          </span>
+          <FileText size={16} strokeWidth={2.2} />
         </div>
         <span className="text-ink-900 text-[17px] font-semibold tracking-[-0.3px]">
           ResumeIQ
@@ -33,9 +29,7 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-2 px-3.5 py-1 rounded-full bg-surface-100 text-ink-500 text-[13.5px] font-medium pointer-events-none select-none shadow-none">
-        <span className="material-symbols-outlined text-brand-600 text-[16px]">
-          auto_awesome
-        </span>
+        <Sparkles size={15} className="text-brand-600" />
         <span>AI-Powered Resume Intelligence</span>
       </div>
 

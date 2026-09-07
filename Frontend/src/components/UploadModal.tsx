@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { ResumeData } from "../types";
 import { SAMPLE_RESUMES } from "../data/resumes";
+import { FileUp, X, Upload, AlertCircle } from "lucide-react";
 
 const MAX_FILE_SIZE_MB = 10;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
@@ -49,18 +50,16 @@ export const UploadModal: React.FC<UploadModalProps> = ({
       <div className="bg-white rounded-xl border border-border-200 shadow-xl w-full max-w-md p-6 flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-brand-600 text-[22px]">
-              upload_file
-            </span>
+            <FileUp size={22} className="text-brand-600" />
             <h3 className="font-headline-sm font-semibold text-ink-900">
               Select or Upload Resume
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="text-ink-500 hover:text-ink-900 p-1 rounded-md transition-colors"
+            className="text-ink-500 hover:text-ink-900 p-1 rounded-md transition-colors cursor-pointer"
           >
-            <span className="material-symbols-outlined text-[18px]">close</span>
+            <X size={18} />
           </button>
         </div>
 
@@ -87,11 +86,9 @@ export const UploadModal: React.FC<UploadModalProps> = ({
 
         <div
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-border-200 hover:border-brand-600 bg-surface-50 hover:bg-brand-50/30 rounded-xl p-5 text-center cursor-pointer transition-all mb-4"
+          className="border-2 border-dashed border-border-200 hover:border-brand-600 bg-surface-50 hover:bg-brand-50/30 rounded-xl p-5 text-center cursor-pointer transition-all mb-4 flex flex-col items-center justify-center"
         >
-          <span className="material-symbols-outlined text-brand-600 text-[28px] mb-1">
-            cloud_upload
-          </span>
+          <Upload size={28} className="text-brand-600 mb-1" />
           <p className="font-body-sm font-medium text-ink-900">
             Upload new resume (PDF only)
           </p>
@@ -103,7 +100,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
         {/* Error message */}
         {fileError && (
           <div className="flex items-start gap-2.5 bg-danger-50 border border-danger-600/30 rounded-lg px-3.5 py-3 mb-3">
-            <span className="material-symbols-outlined text-danger-600 text-[18px] mt-0.5 shrink-0">error</span>
+            <AlertCircle size={18} className="text-danger-600 mt-0.5 shrink-0" />
             <div className="flex-1 min-w-0">
               <p className="text-[12px] text-danger-600 font-medium leading-relaxed">{fileError}</p>
               <button

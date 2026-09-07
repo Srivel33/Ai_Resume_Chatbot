@@ -3,6 +3,7 @@ import { ResumeData } from "../types";
 import { SAMPLE_RESUMES } from "../data/resumes";
 import { motion } from "motion/react";
 import { TiltCard } from "./TiltCard";
+import { AlertCircle, Upload, FolderOpen, ShieldCheck, FileUp, Network, MessageSquare } from "lucide-react";
 
 interface EmptyStateProps {
   onSelectResume: (resume: ResumeData) => void;
@@ -149,7 +150,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
             {uploadError ? (
               <div className="w-full flex flex-col items-center justify-center p-2 pointer-events-none">
                 <div className="w-11 h-11 rounded-full bg-danger-50 flex items-center justify-center text-danger-600 mb-3">
-                  <span className="material-symbols-outlined text-[24px]">error</span>
+                  <AlertCircle size={24} />
                 </div>
                 <h3 className="font-headline-sm font-semibold text-danger-600 mb-2 text-[14px]">
                   Upload failed
@@ -168,7 +169,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
             ) : uploadProgress !== null ? (
               <div className="w-full flex flex-col items-center justify-center p-4">
                 <div className="w-12 h-12 rounded-full bg-brand-50 flex items-center justify-center text-brand-600 mb-4 shadow-none">
-                  <span className="material-symbols-outlined text-[24px]">cloud_upload</span>
+                  <Upload size={24} />
                 </div>
                 <h3 className="font-headline-sm font-semibold text-ink-900 mb-4">Uploading resume...</h3>
                 <div className="w-full bg-surface-100 rounded-full h-1.5 overflow-hidden border border-border-200">
@@ -225,7 +226,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
               onClick={() => fileInputRef.current?.click()}
               className="w-full py-2.5 px-4 rounded-lg bg-linear-to-br from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-700 text-white font-medium text-[13px] text-center active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_2px_4px_rgba(217,119,6,0.2)] hover:-translate-y-px"
             >
-              <span className="material-symbols-outlined text-[18px]">folder_open</span>
+              <FolderOpen size={18} />
               Browse Files
             </button>
           </div>
@@ -233,9 +234,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
 
         <div className="pt-6 border-t border-border-200 flex items-center justify-between text-[11px] text-ink-500">
           <span>Supported ATS formats</span>
-          <span className="material-symbols-outlined text-[15px] text-ink-500">
-            verified_user
-          </span>
+          <ShieldCheck size={16} className="text-ink-500" />
         </div>
       </section>
 
@@ -312,7 +311,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-3 relative">
                   <div className="w-10 h-10 rounded-lg bg-surface-100 flex items-center justify-center text-ink-500 relative">
-                    <span className="material-symbols-outlined text-[20px]">upload_file</span>
+                    <FileUp size={20} />
                     <div className="absolute top-1/2 -right-4.5 w-2 h-2 rounded-full bg-intel-600 hidden md:block"></div>
                   </div>
                   <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-500 bg-surface-100 px-2 py-0.5 rounded-sm">
@@ -345,7 +344,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-3 relative">
                   <div className="w-10 h-10 rounded-lg bg-intel-50 flex items-center justify-center text-intel-600 relative">
-                    <span className="material-symbols-outlined text-[20px]">hub</span>
+                    <Network size={20} />
                     <div className="absolute top-1/2 -right-4.5 w-2 h-2 rounded-full bg-intel-600 hidden md:block"></div>
                   </div>
                   <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-500 bg-surface-100 px-2 py-0.5 rounded-sm">
@@ -378,7 +377,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-3 relative">
                   <div className="w-10 h-10 rounded-lg bg-surface-100 flex items-center justify-center text-ink-500 relative">
-                    <span className="material-symbols-outlined text-[20px]">chat_bubble_outline</span>
+                    <MessageSquare size={20} />
                     <div className="absolute top-1/2 -right-4.5 w-2 h-2 rounded-full bg-intel-600 hidden md:block"></div>
                   </div>
                   <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-500 bg-surface-100 px-2 py-0.5 rounded-sm">
