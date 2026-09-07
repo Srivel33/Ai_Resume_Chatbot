@@ -9,6 +9,8 @@ import { JobDescriptionModal } from "./components/JobDescriptionModal";
 import { UploadModal } from "./components/UploadModal";
 import { MotionConfig } from "motion/react";
 
+const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:8000").replace(/\/$/, "");
+
 export default function App() {
   // Start in empty mode as requested
   const [currentScreen, setCurrentScreen] = useState<AppScreen>("empty");
@@ -47,7 +49,7 @@ export default function App() {
     );
 
     if (resume.fullText) {
-      fetch("http://localhost:8000/ingest_text", {
+      fetch(`${API_BASE_URL}/ingest_text`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: resume.fullText }),
@@ -109,7 +111,7 @@ export default function App() {
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch("http://localhost:8000/upload", {
+      const res = await fetch(`${API_BASE_URL}/upload`, {
         method: "POST",
         body: formData,
       });
@@ -147,7 +149,7 @@ export default function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8000/search", {
+      const response = await fetch(`${API_BASE_URL}/search`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
