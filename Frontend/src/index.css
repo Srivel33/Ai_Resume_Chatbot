@@ -8,6 +8,20 @@
     color: var(--color-ink-900);
     font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
+    /* Prevent iOS tap flash */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Use dynamic viewport height on mobile browsers (accounts for browser chrome) */
+  #root {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Smooth native scrolling on iOS */
+  * {
+    -webkit-overflow-scrolling: touch;
   }
 }
 

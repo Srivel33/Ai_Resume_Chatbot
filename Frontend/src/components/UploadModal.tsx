@@ -1,6 +1,30 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { ResumeData } from "../types";
 import { SAMPLE_RESUMES } from "../data/resumes";
+
+const MAX_FILE_SIZE_MB = 10;
+const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
+const NON_RESUME_PATTERNS = [
+  /invoice/i, /receipt/i, /contract/i, /agreement/i, /report/i,
+  /statement/i, /bill/i, /order/i, /ticket/i, /certificate/i,
+  /manual/i, /handbook/i, /policy/i, /brochure/i, /proposal/i,
+];
+
+const validateFile = (file: File): string | null => {
+  if (!file.name.toLowerCase().endsWith(".pdf") && file.type !== "application/pdf") {
+    return "Only PDF files are supported. Please upload a PDF resume.";
+  }
+  if (file.size > MAX_FILE_SIZE_BYTES) {
+    const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+    return `This file is ${sizeMb} MB — too large. Please upload a resume PDF under ${MAX_FILE_SIZE_MB} MB. Try compressing or re-saving it.`;
+  }
+  const nonResume = NON_RESUME_PATTERNS.find((p) => p.test(file.name));
+  if (nonResume) {
+    return `"${file.name}" doesn't look like a resume. Please upload your CV or resume PDF.`;
+  }
+  return null;
+};
 
 interface UploadModalProps {
   isOpen: boolean;
@@ -16,6 +40,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
   onUploadFile,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
@@ -45,7 +70,15 @@ export const UploadModal: React.FC<UploadModalProps> = ({
           accept=".pdf,application/pdf"
           onChange={(e) => {
             if (e.target.files && e.target.files.length > 0) {
-              onUploadFile(e.target.files[0]);
+              const file = e.target.files[0];
+              const err = validateFile(file);
+              if (err) {
+                setFileError(err);
+                e.target.value = "";
+                return;
+              }
+              setFileError(null);
+              onUploadFile(file);
               onClose();
             }
           }}
@@ -66,6 +99,23 @@ export const UploadModal: React.FC<UploadModalProps> = ({
         </div>
 
         {/* Sample dossier section removed as requested */}
+
+        {/* Error message */}
+        {fileError && (
+          <div className="flex items-start gap-2.5 bg-danger-50 border border-danger-600/30 rounded-lg px-3.5 py-3 mb-3">
+            <span className="material-symbols-outlined text-danger-600 text-[18px] mt-0.5 shrink-0">error</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-[12px] text-danger-600 font-medium leading-relaxed">{fileError}</p>
+              <button
+                type="button"
+                onClick={() => setFileError(null)}
+                className="text-[11px] text-danger-600 underline mt-1 cursor-pointer hover:no-underline"
+              >
+                Dismiss
+              </button>
+            </div>
+          </div>
+        )}
 
         <button
           type="button"

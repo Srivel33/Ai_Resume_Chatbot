@@ -13,7 +13,7 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header
       id="app-header"
-      className="sticky top-0 z-50 w-full h-15 bg-white border-b border-border-200 flex items-center justify-between px-7 shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
+      className="sticky top-0 z-50 w-full h-15 bg-white border-b border-border-200 flex items-center justify-between px-4 sm:px-7 shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
     >
       <div className="flex items-center gap-2.5">
         <div

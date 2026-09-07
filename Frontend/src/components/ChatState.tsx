@@ -133,8 +133,8 @@ export const ChatState: React.FC<ChatStateProps> = ({
       <aside
         id="resume-sidebar"
         className={`${
-          isSidebarOpen ? "flex absolute top-15.25 bottom-0 left-0 right-0 z-40 bg-surface-50" : "hidden"
-        } lg:relative lg:top-0 lg:flex lg:w-85 shrink-0 bg-surface-50 border-r border-border-200 p-6 flex-col justify-between overflow-y-auto`}
+          isSidebarOpen ? "flex absolute top-26 bottom-0 left-0 right-0 z-40 bg-surface-50" : "hidden"
+        } lg:relative lg:top-0 lg:flex lg:w-85 shrink-0 bg-surface-50 border-r border-border-200 p-4 sm:p-6 flex-col justify-between overflow-y-auto`}
       >
         <div className="flex flex-col">
           {/* Section: Resume Identification */}
@@ -278,7 +278,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
         <div
           ref={chatThreadRef}
           id="chatThread"
-          className="flex-1 overflow-y-auto px-6 py-8 lg:px-12 space-y-6 flex flex-col"
+          className="flex-1 overflow-y-auto px-4 sm:px-6 py-5 sm:py-8 lg:px-12 space-y-6 flex flex-col"
         >
 
 
@@ -304,28 +304,31 @@ export const ChatState: React.FC<ChatStateProps> = ({
 
           {/* Messages Stream */}
           {messages.length === 0 && (
-            <div className="my-auto flex flex-col items-center text-center max-w-2xl mx-auto py-6 px-4 w-full relative z-10">
-              <div className="w-12 h-12 rounded-full border-2 border-intel-600 bg-brand-50 flex items-center justify-center text-brand-600 mb-3 shadow-none">
-                <span className="material-symbols-outlined text-[24px]">chat_bubble</span>
+            <div className="my-auto flex flex-col items-center text-center max-w-2xl mx-auto py-3 sm:py-6 px-3 sm:px-4 w-full relative z-10">
+              <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full border-2 border-intel-600 bg-brand-50 flex items-center justify-center text-brand-600 mb-2 sm:mb-3 shadow-none">
+                <span className="material-symbols-outlined text-[20px] sm:text-[24px]">chat_bubble</span>
               </div>
-              <h3 className="font-headline-sm font-bold text-ink-900 text-[18px] mb-1">
+              <h3 className="font-headline-sm font-bold text-ink-900 text-[15px] sm:text-[18px] mb-0.5 sm:mb-1">
                 Ask about {resume.candidateName || "this resume"}
               </h3>
-              <p className="text-[13px] text-ink-500 mb-5 max-w-md">
+              <p className="text-[12px] sm:text-[13px] text-ink-500 mb-3 sm:mb-5 max-w-md hidden sm:block">
                 Click any common question below to search the resume embeddings, or type your own question:
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full text-left">
+              <p className="text-[11px] text-ink-500 mb-3 sm:hidden">
+                Tap a question or type below:
+              </p>
+              <div className="grid grid-cols-2 gap-2 sm:gap-3 w-full text-left">
                 {resume.suggestedInquiries.map((inquiry, idx) => (
                   <TiltCard
                     key={idx}
                     type="button"
                     onClick={() => handleSuggestionClick(inquiry)}
-                    className={`p-3.5 rounded-xl border text-[13px] text-ink-900 flex items-center justify-between gap-3 shadow-[0_8px_24px_rgba(15,23,42,0.05)] transition-all cursor-pointer group text-left min-h-14.5 h-full bg-white hover:bg-surface-50 border-border-200 hover:border-brand-300 hover:-translate-y-px border-t-[3px] ${
+                    className={`p-2.5 sm:p-3.5 rounded-xl border text-[11.5px] sm:text-[13px] text-ink-900 flex items-center justify-between gap-2 shadow-[0_8px_24px_rgba(15,23,42,0.05)] transition-all cursor-pointer group text-left min-h-12 sm:min-h-14.5 h-full bg-white hover:bg-surface-50 border-border-200 hover:border-brand-300 hover:-translate-y-px border-t-[3px] ${
                       idx % 2 === 0 ? "border-t-brand-600" : "border-t-intel-600"
                     }`}
                   >
-                    <span className="font-medium leading-snug">{inquiry}</span>
-                    <span className="material-symbols-outlined text-brand-600 text-[18px] opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0">
+                    <span className="font-medium leading-snug line-clamp-3">{inquiry}</span>
+                    <span className="material-symbols-outlined text-brand-600 text-[15px] sm:text-[18px] opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0">
                       arrow_forward
                     </span>
                   </TiltCard>
@@ -413,7 +416,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
         {/* Input Dispatch Cockpit (Bottom Dock) */}
         <footer
           id="chat-dock"
-          className="h-20 bg-white px-4 lg:px-12 flex items-center gap-3 lg:gap-4 border-t border-border-200 z-20 shrink-0 pb-safe"
+          className="min-h-18 bg-white px-3 sm:px-4 lg:px-12 py-3 flex items-center gap-2 sm:gap-3 lg:gap-4 border-t border-border-200 z-20 shrink-0 pb-[max(12px,env(safe-area-inset-bottom))]"
         >
           <form
             onSubmit={handleSubmit}

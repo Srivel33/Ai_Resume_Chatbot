@@ -16,8 +16,43 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+
+  const MAX_FILE_SIZE_MB = 10;
+  const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
+  // Non-resume document patterns to warn about
+  const NON_RESUME_PATTERNS = [
+    /invoice/i, /receipt/i, /contract/i, /agreement/i, /report/i,
+    /statement/i, /bill/i, /order/i, /ticket/i, /certificate/i,
+    /manual/i, /handbook/i, /policy/i, /brochure/i, /proposal/i,
+  ];
+
+  const validateFile = (file: File): string | null => {
+    if (!file.name.toLowerCase().endsWith(".pdf") && file.type !== "application/pdf") {
+      return "Only PDF files are supported. Please upload a PDF resume.";
+    }
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+      return `This file is ${sizeMb} MB. Please upload a PDF smaller than ${MAX_FILE_SIZE_MB} MB. Try compressing your resume or saving it as a smaller PDF.`;
+    }
+    const nonResume = NON_RESUME_PATTERNS.find((p) => p.test(file.name));
+    if (nonResume) {
+      return `"${file.name}" doesn't look like a resume. Please upload your CV or resume PDF for best results.`;
+    }
+    return null;
+  };
 
   const startUploadSimulation = (file: File) => {
+    setUploadError(null);
+    const error = validateFile(file);
+    if (error) {
+      setUploadError(error);
+      // Reset file input so user can re-select the same file
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      return;
+    }
+
     setUploadProgress(0);
     const totalDuration = 600;
     const intervalMs = 20;
@@ -55,7 +90,6 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
-
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       startUploadSimulation(e.dataTransfer.files[0]);
     }
@@ -75,7 +109,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       {/* Left Column: Dossier Ingestion Rail */}
       <section
         id="ingestion-rail"
-        className="w-full lg:w-85 shrink-0 bg-surface-50 border-b lg:border-b-0 lg:border-r border-border-200 p-6 flex flex-col self-stretch gap-6"
+        className="w-full lg:w-85 shrink-0 bg-surface-50 border-b lg:border-b-0 lg:border-r border-border-200 p-4 sm:p-6 flex flex-col self-stretch gap-4 sm:gap-6"
       >
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
@@ -94,11 +128,13 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            className={`relative flex flex-col items-center justify-center p-6 text-center cursor-pointer transition-all duration-200 group rounded-xl border-2 border-dashed ${
-              isDragging
+            className={`relative flex flex-col items-center justify-center p-4 sm:p-6 text-center cursor-pointer transition-all duration-200 group rounded-xl border-2 border-dashed ${
+              uploadError
+                ? "border-danger-600 bg-danger-50"
+                : isDragging
                 ? "border-brand-600 bg-brand-50 scale-[1.01]"
                 : "border-border-200 hover:border-brand-400 bg-white hover:bg-brand-50"
-            } min-h-55`}
+            } min-h-40 sm:min-h-55`}
           >
             <input
               ref={fileInputRef}
@@ -110,7 +146,26 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
               aria-label="Upload resume file"
             />
 
-            {uploadProgress !== null ? (
+            {uploadError ? (
+              <div className="w-full flex flex-col items-center justify-center p-2 pointer-events-none">
+                <div className="w-11 h-11 rounded-full bg-danger-50 flex items-center justify-center text-danger-600 mb-3">
+                  <span className="material-symbols-outlined text-[24px]">error</span>
+                </div>
+                <h3 className="font-headline-sm font-semibold text-danger-600 mb-2 text-[14px]">
+                  Upload failed
+                </h3>
+                <p className="text-[12px] text-danger-600 leading-relaxed max-w-65">
+                  {uploadError}
+                </p>
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setUploadError(null); }}
+                  className="mt-3 px-3 py-1 rounded-lg text-[11px] font-medium bg-white border border-danger-600 text-danger-600 hover:bg-danger-50 transition-colors pointer-events-auto cursor-pointer"
+                >
+                  Try again
+                </button>
+              </div>
+            ) : uploadProgress !== null ? (
               <div className="w-full flex flex-col items-center justify-center p-4">
                 <div className="w-12 h-12 rounded-full bg-brand-50 flex items-center justify-center text-brand-600 mb-4 shadow-none">
                   <span className="material-symbols-outlined text-[24px]">cloud_upload</span>
@@ -150,7 +205,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
                   Drop your resume here
                 </h2>
                 <p className="font-body-sm text-[12px] text-ink-500 mb-3">
-                  PDF only • Max 10 MB
+                  Resume PDF only • Max 10 MB
                 </p>
 
                 <div className="flex items-center gap-1.5">
@@ -187,9 +242,9 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       {/* Right Column: Interactive Process Canvas */}
       <section
         id="empty-canvas"
-        className="flex-1 bg-white bg-dot-grid flex flex-col items-center justify-center p-6 lg:p-10 min-h-125 lg:min-h-0 relative overflow-hidden"
+        className="flex-1 bg-white bg-dot-grid flex flex-col items-center justify-center p-5 sm:p-6 lg:p-10 min-h-105 sm:min-h-125 lg:min-h-0 relative overflow-hidden"
       >
-        <div className="flex flex-col items-center justify-center text-center max-w-3xl relative z-10 px-4 w-full">
+        <div className="flex flex-col items-center justify-center text-center max-w-3xl relative z-10 px-2 sm:px-4 w-full">
           {/* Signature Illustrated Moment */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}

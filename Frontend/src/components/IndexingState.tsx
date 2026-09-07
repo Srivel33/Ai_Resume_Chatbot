@@ -157,7 +157,7 @@ export const IndexingState: React.FC<IndexingStateProps> = ({
       {/* Left Column (Ingestion & Pipeline Dossier Stage) */}
       <aside
         id="indexing-sidebar"
-        className="w-full lg:w-85 shrink-0 bg-surface-50 border-b lg:border-b-0 lg:border-r border-border-200 p-6 flex flex-col justify-between"
+        className="w-full lg:w-85 shrink-0 bg-surface-50 border-b lg:border-b-0 lg:border-r border-border-200 p-4 sm:p-6 flex flex-col justify-between"
       >
         <div className="flex flex-col">
           {/* Section Micro Label */}
@@ -184,7 +184,7 @@ export const IndexingState: React.FC<IndexingStateProps> = ({
 
           <button
             onClick={onCancel}
-            className="w-full flex items-center justify-center gap-2 mb-8 py-2 px-3 border border-border-200 hover:border-ink-300 text-ink-900 hover:bg-surface-100 rounded-lg font-label-regular transition-colors bg-white cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 mb-4 sm:mb-8 py-2 px-3 border border-border-200 hover:border-ink-300 text-ink-900 hover:bg-surface-100 rounded-lg font-label-regular transition-colors bg-white cursor-pointer"
             type="button"
           >
             <span className="material-symbols-outlined text-[18px] text-brand-600">
@@ -224,7 +224,7 @@ export const IndexingState: React.FC<IndexingStateProps> = ({
       {/* Right Stage (Executive Focus Area) */}
       <section
         id="indexing-stage"
-        className="flex-1 bg-white bg-dot-grid flex flex-col items-center justify-center p-8 lg:p-12 relative overflow-hidden"
+        className="flex-1 bg-white bg-dot-grid flex flex-col items-center justify-center p-5 sm:p-8 lg:p-12 relative overflow-hidden"
       >
         {/* Ambient Background Illumination & Drifters */}
         <div className="absolute w-96 h-96 rounded-full bg-brand-500/10 blur-3xl pointer-events-none -top-20 -right-20 z-0"></div>

@@ -11,6 +11,16 @@ import { MotionConfig } from "motion/react";
 
 const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:8000").replace(/\/$/, "");
 
+/** Returns true when the error is a network connectivity failure (no internet / backend unreachable) */
+const isNetworkError = (err: unknown): boolean => {
+  if (err instanceof TypeError) return true; // fetch throws TypeError on network failure
+  if (err instanceof Error) {
+    const msg = err.message.toLowerCase();
+    return msg.includes("failed to fetch") || msg.includes("networkerror") || msg.includes("network request failed");
+  }
+  return false;
+};
+
 export default function App() {
   // Start in empty mode as requested
   const [currentScreen, setCurrentScreen] = useState<AppScreen>("empty");
@@ -128,7 +138,13 @@ export default function App() {
         }));
       }
     } catch (err) {
-      console.warn("Could not parse resume via backend, continuing with client extraction", err);
+      if (isNetworkError(err)) {
+        console.warn("Network error during upload — backend unreachable", err);
+        // Backend unreachable: still allow the app to proceed with client-side extraction
+        // The indexing screen will complete; the user will see offline errors when chatting
+      } else {
+        console.warn("Could not parse resume via backend, continuing with client extraction", err);
+      }
     } finally {
       setIsBackendReady(true);
     }
@@ -173,10 +189,20 @@ export default function App() {
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
       console.error("Error communicating with backend:", error);
+
+      let errorText: string;
+      if (isNetworkError(error) || !navigator.onLine) {
+        errorText = "⚠️ No internet connection. Please check your network and try again.";
+      } else if (error instanceof Error && error.message.includes("5")) {
+        errorText = "The server is temporarily unavailable. Please try again in a moment.";
+      } else {
+        errorText = "Something went wrong. Please try again.";
+      }
+
       const aiMessage: ChatMessage = {
         id: `ai_${Date.now()}`,
         sender: "ai",
-        text: "Daily AI request limit reached. Please try again tomorrow or retry in a few moments.",
+        text: errorText,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
       setMessages((prev) => [...prev, aiMessage]);
@@ -188,7 +214,7 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="min-h-screen bg-white flex flex-col font-sans text-ink-900">
+      <div className="min-h-dvh bg-white flex flex-col font-sans text-ink-900">
         {/* Pinned Top Navigation */}
         <Header
           currentScreen={currentScreen}
