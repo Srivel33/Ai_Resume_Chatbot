@@ -42,6 +42,8 @@
 | 📊 **Executive Resume Analysis** | Auto-extracts candidate name, competencies, experience summary, word count, token count, and page count. |
 | 🎯 **Job Description Matching** | Paste a job description to get an instant percentage match score and skill gap analysis. |
 | 🌟 **Premium UI** | Dark glassmorphism, smooth Framer Motion animations, responsive layout, custom Tailwind v4 design system. |
+| 📱 **Mobile-First Responsive Layout** | Custom-tailored vertical hierarchy, pinned bottom docks, and internal scrolling for clean smartphone experience. |
+| 🛡️ **Network Resilience** | Graceful fallback error handling when offline or during backend cold-starts without losing resume state. |
 
 ---
 
@@ -60,27 +62,36 @@ Ai_Resume_Analyser/
 │   └── .env.example                 # Environment variable template
 │
 ├── Frontend/                        # React + TypeScript + Vite
+│   ├── index.html                   # HTML document root & meta tags
 │   ├── src/
+│   │   ├── main.tsx                 # Application entry point & DOM mount
 │   │   ├── App.tsx                  # Root orchestrator — state, routing, API calls
 │   │   ├── types.ts                 # TypeScript type definitions
 │   │   ├── vite-env.d.ts            # Vite environment variable typings
 │   │   ├── index.css                # Tailwind v4 design system + custom tokens
 │   │   ├── components/
-│   │   │   ├── Header.tsx           # Top navigation bar
+│   │   │   ├── Header.tsx           # Top navigation bar & session reset
 │   │   │   ├── EmptyState.tsx       # Landing / Upload resume screen
 │   │   │   ├── IndexingState.tsx    # Animated indexing progress screen
-│   │   │   ├── ChatState.tsx        # Main AI chat interface
+│   │   │   ├── ChatState.tsx        # Main AI chat interface & suggestions
 │   │   │   ├── UploadModal.tsx      # PDF upload drag-and-drop modal
 │   │   │   ├── JobDescriptionModal.tsx  # JD paste + match score modal
-│   │   │   └── TiltCard.tsx         # 3D tilt hover card component
+│   │   │   └── TiltCard.tsx         # 3D interactive tilt card component
 │   │   └── data/
 │   │       └── resumes.ts           # Sample resume data & initial chat messages
+│   ├── vercel.json                  # Vercel deployment SPA rewrites
 │   ├── .env.example                 # Frontend environment variable template
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── vite.config.ts
+│   ├── package.json                 # Dependencies & scripts
+│   ├── tsconfig.json                # TypeScript compiler configuration
+│   └── vite.config.ts               # Vite bundler configuration & code splitting
 │
-├── .gitignore
+├── screenshots/                     # Documentation preview images
+│   ├── upload.png                   # Upload screen screenshot
+│   ├── indexing.png                 # Indexing screen screenshot
+│   └── chat.png                     # Chat screen screenshot
+│
+├── .gitignore                       # Git ignore configuration
+├── LICENSE                          # MIT License
 └── README.md
 ```
 
