@@ -3,13 +3,15 @@ Frontend/node_modules/
 Frontend/dist/
 Frontend/.vscode/
 
+
 # Backend
 Backend/venv/
 Backend/__pycache__/
 Backend/chroma_db/
 
-# Secrets
+# Secrets & IDE
 Backend/.env
 Frontend/.env
 Frontend/.env.local
+.vscode/
 

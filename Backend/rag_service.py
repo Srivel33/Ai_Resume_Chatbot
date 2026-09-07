@@ -4,10 +4,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-client = genai.Client(
-    api_key=os.getenv("GEMINI_API_KEY")
-)
-
 AVAILABLE_MODELS = [
     "gemini-3.5-flash-lite",
     "gemini-3.5-flash",
@@ -19,6 +15,20 @@ AVAILABLE_MODELS = [
 
 # In-memory cache: (question, context_hash) -> answer
 _answer_cache = {}
+
+def get_api_clients():
+    keys = []
+    for i in range(1, 10):
+        k = os.getenv(f"GEMINI_API_KEY_{i}")
+        if k and k.strip():
+            keys.append(k.strip())
+    single = os.getenv("GEMINI_API_KEY")
+    if single and single.strip() and single.strip() not in keys:
+        keys.append(single.strip())
+    
+    if not keys:
+        return [genai.Client()]
+    return [genai.Client(api_key=k) for k in keys]
 
 def generate_answer(question: str, context: str) -> str:
     cleaned_question = question.strip()
@@ -40,25 +50,29 @@ Question:
 {cleaned_question}
 """
 
+    clients = get_api_clients()
     last_error = None
     is_quota_error = False
 
-    for model_name in AVAILABLE_MODELS:
-        try:
-            response = client.models.generate_content(
-                model=model_name,
-                contents=prompt
-            )
-            if response and response.text:
-                result = response.text.strip()
-                _answer_cache[cache_key] = result
-                return result
-        except Exception as e:
-            error_str = str(e)
-            if "429" in error_str or "RESOURCE_EXHAUSTED" in error_str or "quota" in error_str.lower():
-                is_quota_error = True
-            last_error = e
-            continue
+    # Iterate through all available API keys, then through available models for each key
+    for client in clients:
+        for model_name in AVAILABLE_MODELS:
+            try:
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=prompt
+                )
+                if response and response.text:
+                    result = response.text.strip()
+                    _answer_cache[cache_key] = result
+                    return result
+            except Exception as e:
+                error_str = str(e)
+                if "429" in error_str or "RESOURCE_EXHAUSTED" in error_str or "quota" in error_str.lower():
+                    is_quota_error = True
+                last_error = e
+                # Try next model or next API key
+                continue
 
     if is_quota_error:
         return "Daily AI request limit reached. Please try again tomorrow or retry in a few moments."
