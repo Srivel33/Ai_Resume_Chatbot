@@ -269,7 +269,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="text-[28px] sm:text-[34px] font-bold text-ink-900 leading-tight tracking-tight mb-2"
           >
-            AI Resume Analyzer & Insights
+            AI Resume Q&A — Ask Anything About Your Resume
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 12 }}
@@ -277,7 +277,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
             transition={{ duration: 0.3, ease: "easeOut", delay: 0.08 }}
             className="font-body-md text-[15px] text-ink-500 max-w-xl mb-8"
           >
-            Upload your resume to analyze skills, experience, and career strengths with AI-powered semantic search and intelligent Q&A.
+            Upload your PDF resume. Our AI reads it, organizes it, and answers any question you ask — instantly, using only the information in your document.
           </motion.p>
 
           {/* 3-Step Process Guide */}
@@ -321,12 +321,12 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
                   1. Upload Your Resume
                 </h3>
                 <p className="text-[12px] text-ink-500 leading-relaxed">
-                  Upload your PDF or DOCX resume and let ResumeIQ extract and structure your professional profile.
+                  Upload your PDF resume so the AI can read and understand your skills, projects, and work history.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-surface-100 flex items-center gap-1.5 text-[12px] font-medium text-ink-500 relative z-10">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-600"></span>
-                <span>Upload resume</span>
+                <span>Resume Upload</span>
               </div>
             </div>
 
@@ -351,15 +351,15 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
                   </span>
                 </div>
                 <h3 className="text-[15px] font-bold text-ink-900 mb-1.5">
-                  2. Build Your Career Knowledge Base
+                  2. AI Organizes Your Info
                 </h3>
                 <p className="text-[12px] text-ink-500 leading-relaxed">
-                  Your resume is transformed into meaningful semantic chunks and indexed for fast, context-aware retrieval.
+                  The system sorts your resume into organized sections so the AI can quickly find the exact details you need.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-surface-100 flex items-center gap-1.5 text-[12px] font-medium text-ink-500 relative z-10">
                 <span className="w-1.5 h-1.5 rounded-full bg-intel-600"></span>
-                <span>Semantic vector indexing</span>
+                <span>Smart Organization</span>
               </div>
             </div>
 
@@ -384,15 +384,15 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
                   </span>
                 </div>
                 <h3 className="text-[15px] font-bold text-ink-900 mb-1.5">
-                  3. Ask & Discover
+                  3. Ask Any Question
                 </h3>
                 <p className="text-[12px] text-ink-500 leading-relaxed">
-                  Ask questions about your experience, skills, projects, and career profile. Get AI-generated answers grounded directly in your resume.
+                  Ask anything about your qualifications, experience, or achievements and get clear, instant answers.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-surface-100 flex items-center gap-1.5 text-[12px] font-medium text-ink-500 relative z-10">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-600"></span>
-                <span>Grounded, source-aware answers</span>
+                <span>Instant Answers</span>
               </div>
             </div>
           </motion.div>
