@@ -13,8 +13,7 @@
 [![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector_Store-FF6600?style=flat-square)](https://www.trychroma.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-**🔗 Live Demo:** `https://your-app.vercel.app` ← _add your Vercel URL here_
-**🖥 Backend API:** `https://your-backend.onrender.com` ← _add your Render URL here_
+**🔗 Host Link:** [https://resume-iqbot.vercel.app/](https://resume-iqbot.vercel.app/)
 
 </div>
 
@@ -22,7 +21,6 @@
 
 ## 📸 Screenshots
 
-> _Add your screenshots here after deployment_
 
 | Upload & Analyse | Indexing | AI Chat |
 |:---:|:---:|:---:|
@@ -198,37 +196,9 @@ Frontend runs at → **`http://localhost:5173`**
 
 ---
 
-## 🌐 Free Tier Deployment Guide
+## 🌐 Deployment Guide
 
-### Step 1 — Deploy Backend on [Render.com](https://render.com) (Free)
-
-1. Sign up at [render.com](https://render.com) and click **New → Web Service**.
-2. Connect your GitHub repository.
-3. Set the service configuration:
-
-   | Setting | Value |
-   |:---|:---|
-   | **Root Directory** | `Backend` |
-   | **Runtime** | `Python 3` |
-   | **Build Command** | `pip install -r requirements.txt` |
-   | **Start Command** | `uvicorn main:app --host 0.0.0.0 --port $PORT` |
-   | **Instance Type** | `Free` |
-
-4. Under **Environment Variables**, add:
-
-   | Key | Value |
-   |:---|:---|
-   | `GEMINI_API_KEY_1` | `AIza...your_key_1` |
-   | `GEMINI_API_KEY_2` | `AIza...your_key_2` _(optional)_ |
-   | `GEMINI_API_KEY_3` | `AIza...your_key_3` _(optional)_ |
-
-5. Deploy. Copy the URL: `https://ai-resume-backend.onrender.com`
-
-> ⚠️ **Free tier note:** Render free instances spin down after 15 min of inactivity. The first request after idle may take ~30 seconds to wake up. This is normal behaviour on the free tier.
-
----
-
-### Step 2 — Deploy Frontend on [Vercel](https://vercel.com) (Free)
+### Deploy on [Vercel](https://vercel.com) (Free)
 
 1. Sign up at [vercel.com](https://vercel.com) and click **Add New → Project**.
 2. Import your GitHub repository.
