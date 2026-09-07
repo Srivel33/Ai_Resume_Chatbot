@@ -63,6 +63,8 @@ export const TiltCard: React.FC<TiltCardProps> = ({ children, className = "", on
           rotateX,
           rotateY,
           transformPerspective: 1000,
+          transformStyle: "preserve-3d",
+          backfaceVisibility: "hidden",
         }}
         className={className}
       >
@@ -80,6 +82,8 @@ export const TiltCard: React.FC<TiltCardProps> = ({ children, className = "", on
         rotateX,
         rotateY,
         transformPerspective: 1000,
+        transformStyle: "preserve-3d",
+        backfaceVisibility: "hidden",
       }}
       className={className}
     >

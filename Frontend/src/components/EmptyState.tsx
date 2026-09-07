@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { ResumeData } from "../types";
 import { SAMPLE_RESUMES } from "../data/resumes";
 import { motion } from "motion/react";
-import { TiltCard } from "./TiltCard";
 import { AlertCircle, Upload, FolderOpen, ShieldCheck, FileUp, Network, MessageSquare } from "lucide-react";
 
 interface EmptyStateProps {
@@ -289,7 +288,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
             className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full text-left relative z-0"
           >
             {/* Desktop Connector Line (Animated Rail) */}
-            <div className="hidden md:flex absolute top-10 left-[16%] right-[16%] h-px -z-10 items-center justify-start overflow-hidden bg-transparent">
+            <div className="hidden md:flex absolute top-10 left-[16%] right-[16%] h-px z-0 items-center justify-start overflow-hidden pointer-events-none">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
@@ -299,7 +298,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
             </div>
             
             {/* Step 1 */}
-            <TiltCard className="bg-white border border-border-200 rounded-xl p-5 flex flex-col justify-between shadow-[0_8px_24px_rgba(15,23,42,0.05)] transition-all duration-200 hover:shadow-md hover:border-brand-300 cursor-default relative overflow-hidden group">
+            <div className="bg-white border border-border-200 rounded-xl p-5 flex flex-col justify-between shadow-[0_8px_24px_rgba(15,23,42,0.05)] transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-brand-300 cursor-default relative overflow-hidden group z-10">
               <motion.span 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -329,10 +328,10 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-600"></span>
                 <span>Upload resume</span>
               </div>
-            </TiltCard>
+            </div>
 
             {/* Step 2 */}
-            <TiltCard className="bg-white border border-border-200 rounded-xl p-5 flex flex-col justify-between shadow-[0_8px_24px_rgba(15,23,42,0.05)] transition-all duration-200 hover:shadow-md hover:border-brand-300 cursor-default relative overflow-hidden group">
+            <div className="bg-white border border-border-200 rounded-xl p-5 flex flex-col justify-between shadow-[0_8px_24px_rgba(15,23,42,0.05)] transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-brand-300 cursor-default relative overflow-hidden group z-10">
               <motion.span 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -362,10 +361,10 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
                 <span className="w-1.5 h-1.5 rounded-full bg-intel-600"></span>
                 <span>Semantic vector indexing</span>
               </div>
-            </TiltCard>
+            </div>
 
             {/* Step 3 */}
-            <TiltCard className="bg-white border border-border-200 rounded-xl p-5 flex flex-col justify-between shadow-[0_8px_24px_rgba(15,23,42,0.05)] transition-all duration-200 hover:shadow-md hover:border-brand-300 cursor-default relative overflow-hidden group">
+            <div className="bg-white border border-border-200 rounded-xl p-5 flex flex-col justify-between shadow-[0_8px_24px_rgba(15,23,42,0.05)] transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-brand-300 cursor-default relative overflow-hidden group z-10">
               <motion.span 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -395,7 +394,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-600"></span>
                 <span>Grounded, source-aware answers</span>
               </div>
-            </TiltCard>
+            </div>
           </motion.div>
         </div>
       </section>
