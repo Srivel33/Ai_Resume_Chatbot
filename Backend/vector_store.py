@@ -26,9 +26,13 @@ def store_embeddings(chunks, embeddings):
    )
    
 def search_embeddings(query_embedding, top_k=3):
-   results = collection.query(
-       query_embeddings=[query_embedding],
-       n_results=top_k
-   )
+    count = collection.count()
+    if count == 0:
+        return {"documents": [[]]}
+    results = collection.query(
+        query_embeddings=[query_embedding],
+        n_results=min(top_k, count)
+    )
 
-   return results
+    return results
+

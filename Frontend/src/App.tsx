@@ -46,12 +46,21 @@ export default function App() {
           ]
     );
 
+    if (resume.fullText) {
+      fetch("http://localhost:8000/ingest_text", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: resume.fullText }),
+      }).catch((err) => console.warn("Could not auto-ingest sample resume text:", err));
+    }
+
     if (triggerIndexing) {
       setCurrentScreen("indexing");
     } else {
       setCurrentScreen("chat");
     }
   };
+
 
   // Upload custom file handler
   const handleUploadFile = async (file: File) => {

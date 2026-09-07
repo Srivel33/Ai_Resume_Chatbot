@@ -60,35 +60,55 @@ def upload_resume(file: UploadFile = File(...)):
    "embedding_count": len(embeddings)
     }
 
-@app.post("/search")
-def search_resume(request: SearchRequest):
+class IngestTextRequest(BaseModel):
+    text: str
 
-   # Convert question into an embedding
-   query_embedding = generate_embedding(request.question)
+@app.post("/ingest_text")
+def ingest_text(request: IngestTextRequest):
+    clear_collection()
+    chunks = chunk_text(request.text)
+    embeddings = []
 
-   # Search ChromaDB
-   results = search_embeddings(query_embedding)
+    for chunk in chunks:
+        vector = generate_embedding(chunk)
+        embeddings.append(vector)
 
-   # Get relevant chunks
-   relevant_chunks = results["documents"][0]
+    if chunks and embeddings:
+        store_embeddings(chunks, embeddings)
 
-   # Combine chunks into one context
-   context = "\n\n".join(relevant_chunks)
-
-   # Generate AI answer
-   answer = generate_answer(
-       request.question,
-       context
-   )
-
-
-
-
-   return {
-       "question": request.question,
-       "context": relevant_chunks,
-       "answer": answer
+    return {
+        "text": request.text,
+        "chunks": chunks,
+        "chunk_count": len(chunks),
+        "embedding_count": len(embeddings)
     }
 
+@app.post("/search")
+def search_resume(request: SearchRequest):
+    # Convert question into an embedding
+    query_embedding = generate_embedding(request.question)
 
+    # Search ChromaDB
+    results = search_embeddings(query_embedding)
 
+    # Get relevant chunks safely
+    relevant_chunks = (
+        results["documents"][0]
+        if results.get("documents") and len(results["documents"]) > 0 and results["documents"][0] is not None
+        else []
+    )
+
+    # Combine chunks into one context
+    context = "\n\n".join(relevant_chunks) if relevant_chunks else ""
+
+    # Generate AI answer
+    answer = generate_answer(
+        request.question,
+        context
+    )
+
+    return {
+        "question": request.question,
+        "context": relevant_chunks,
+        "answer": answer
+    }
