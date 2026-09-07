@@ -134,6 +134,8 @@ export default function App() {
 
   // Send question to backend Gemini API
   const handleSendMessage = async (questionText: string) => {
+    if (isLoading || !questionText.trim()) return;
+
     const userMessage: ChatMessage = {
       id: `user_${Date.now()}`,
       sender: "user",
@@ -162,21 +164,17 @@ export default function App() {
       const aiMessage: ChatMessage = {
         id: `ai_${Date.now()}`,
         sender: "ai",
-        text: data.answer || "Appraisal synthesized.",
+        text: data.answer || "Daily AI request limit reached. Please try again tomorrow or retry in a few moments.",
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
 
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
-      console.error("Error communicating with /api/chat:", error);
-      // Heuristic fallback response
+      console.error("Error communicating with backend:", error);
       const aiMessage: ChatMessage = {
         id: `ai_${Date.now()}`,
         sender: "ai",
-        text: `Analysis of candidate profile for “${questionText}”: The candidate exhibits demonstrated proficiency aligned with the core competencies recorded in the dossier.`,
-        quote: `“${activeResume.summary}”`,
-        matchPercentage: 82,
-        competencies: activeResume.competencies.slice(0, 3),
+        text: "Daily AI request limit reached. Please try again tomorrow or retry in a few moments.",
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
       setMessages((prev) => [...prev, aiMessage]);
@@ -185,9 +183,10 @@ export default function App() {
     }
   };
 
+
   return (
     <MotionConfig reducedMotion="user">
-      <div className="min-h-screen bg-white flex flex-col font-sans text-[#0F172A]">
+      <div className="min-h-screen bg-white flex flex-col font-sans text-ink-900">
         {/* Pinned Top Navigation */}
         <Header
           currentScreen={currentScreen}

@@ -157,7 +157,7 @@ export const IndexingState: React.FC<IndexingStateProps> = ({
       {/* Left Column (Ingestion & Pipeline Dossier Stage) */}
       <aside
         id="indexing-sidebar"
-        className="w-full lg:w-[340px] shrink-0 bg-surface-50 border-b lg:border-b-0 lg:border-r border-border-200 p-6 flex flex-col justify-between"
+        className="w-full lg:w-85 shrink-0 bg-surface-50 border-b lg:border-b-0 lg:border-r border-border-200 p-6 flex flex-col justify-between"
       >
         <div className="flex flex-col">
           {/* Section Micro Label */}
@@ -247,8 +247,8 @@ export const IndexingState: React.FC<IndexingStateProps> = ({
         />
 
         {/* Focused State Presentation */}
-        <TiltCard className="flex flex-col items-center text-center w-full max-w-lg z-10 p-6 md:p-8 rounded-2xl bg-white border border-border-200 shadow-[0_16px_40px_rgba(15,23,42,0.08),_0_0_40px_rgba(204,251,241,0.3)] relative overflow-hidden group">
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-brand-500 to-brand-600"></div>
+        <TiltCard className="flex flex-col items-center text-center w-full max-w-lg z-10 p-6 md:p-8 rounded-2xl bg-white border border-border-200 shadow-[0_16px_40px_rgba(15,23,42,0.08),0_0_40px_rgba(204,251,241,0.3)] relative overflow-hidden group">
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-brand-500 to-brand-600"></div>
           <div className="absolute -top-16 -right-16 w-36 h-36 rounded-full bg-intel-50 blur-2xl pointer-events-none"></div>
 
           {/* Circular Scanning Animation */}
@@ -260,7 +260,7 @@ export const IndexingState: React.FC<IndexingStateProps> = ({
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 8, ease: "linear", repeat: Infinity }}
-              className="absolute inset-[4px] rounded-full border border-dashed border-intel-600/60"
+              className="absolute inset-1 rounded-full border border-dashed border-intel-600/60"
             ></motion.div>
             
             {/* Center icon pulsing */}

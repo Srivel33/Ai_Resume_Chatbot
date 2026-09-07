@@ -45,7 +45,7 @@ export const JobDescriptionModal: React.FC<JobDescriptionModalProps> = ({
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="e.g. Seeking Senior Backend / Full-Stack Engineer with 4+ years Python, FastAPI, React, and distributed cloud microservices..."
-          className="w-full h-36 p-3 bg-surface-100 border border-border-200 rounded-lg text-ink-900 text-[13px] font-mono focus:outline-none focus:ring-2 focus:ring-brand-50 focus:border-brand-600 focus:bg-white resize-none mb-4"
+          className="jd-modal-textarea"
         />
 
         <div className="flex items-center justify-end gap-2">
@@ -75,7 +75,7 @@ export const JobDescriptionModal: React.FC<JobDescriptionModalProps> = ({
               onApplyJobDescription(text);
               onClose();
             }}
-            className="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-[13px] font-medium transition-all shadow-none cursor-pointer active:scale-[0.98] hover:-translate-y-[1px]"
+            className="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-[13px] font-medium transition-all shadow-none cursor-pointer active:scale-[0.98] hover:-translate-y-px"
           >
             Apply Benchmark
           </button>

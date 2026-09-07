@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from PyPDF2 import PdfReader
 from chunking import chunk_text
-from embedding_service import generate_embedding
+from embedding_service import generate_embedding, generate_batch_embeddings
 from vector_store import store_embeddings, search_embeddings, clear_collection
 from rag_service import generate_answer
 
@@ -11,7 +11,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Allow all origins for development
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -20,58 +20,51 @@ app.add_middleware(
 class SearchRequest(BaseModel):
     question: str
 
+class IngestTextRequest(BaseModel):
+    text: str
 
 @app.get("/")
 def home():
-   return {
-       "message": "AI Resume Assistant API is running"
-   }
+    return {
+        "message": "AI Resume Assistant API is running"
+    }
 
 @app.post("/upload")
 def upload_resume(file: UploadFile = File(...)):
-   clear_collection()
-   reader = PdfReader(file.file)
+    clear_collection()
+    reader = PdfReader(file.file)
 
-   text = ""
+    text = ""
+    for page in reader.pages:
+        page_text = page.extract_text()
+        if page_text:
+            text += page_text
 
-   for page in reader.pages:
-       page_text = page.extract_text()
+    # Split resume text into chunks
+    chunks = chunk_text(text)
+    
+    # Generate all embeddings in a single batch API call
+    embeddings = generate_batch_embeddings(chunks) if chunks else []
 
-       if page_text:
-           text += page_text
+    if chunks and embeddings:
+        store_embeddings(chunks, embeddings)
 
-   # Split resume text into chunks
-   chunks = chunk_text(text)
-   embeddings = []
-
-   for chunk in chunks:
-        vector = generate_embedding(chunk)
-        embeddings.append(vector)
-
-   store_embeddings(chunks, embeddings)
-
-
-   return {
-   "filename": file.filename,
-   "pages": len(reader.pages),
-   "text": text,
-   "chunks": chunks,
-   "chunk_count": len(chunks),
-   "embedding_count": len(embeddings)
+    return {
+        "filename": file.filename,
+        "pages": len(reader.pages),
+        "text": text,
+        "chunks": chunks,
+        "chunk_count": len(chunks),
+        "embedding_count": len(embeddings)
     }
-
-class IngestTextRequest(BaseModel):
-    text: str
 
 @app.post("/ingest_text")
 def ingest_text(request: IngestTextRequest):
     clear_collection()
     chunks = chunk_text(request.text)
-    embeddings = []
-
-    for chunk in chunks:
-        vector = generate_embedding(chunk)
-        embeddings.append(vector)
+    
+    # Generate all embeddings in a single batch API call
+    embeddings = generate_batch_embeddings(chunks) if chunks else []
 
     if chunks and embeddings:
         store_embeddings(chunks, embeddings)

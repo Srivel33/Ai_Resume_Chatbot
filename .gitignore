@@ -1,6 +1,7 @@
 # Frontend
 Frontend/node_modules/
 Frontend/dist/
+Frontend/.vscode/
 
 # Backend
 Backend/venv/

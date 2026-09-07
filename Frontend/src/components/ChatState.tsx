@@ -94,12 +94,15 @@ export const ChatState: React.FC<ChatStateProps> = ({
   };
 
   const handleSuggestionClick = (prompt: string) => {
+    if (isLoading) return;
     onSendMessage(prompt);
   };
 
   const handleCompetencyClick = (comp: string) => {
+    if (isLoading) return;
     onSendMessage(`What is this candidate's proficiency and track record in ${comp}?`);
   };
+
 
   return (
     <div
@@ -112,7 +115,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
            <span className="material-symbols-outlined text-brand-600 text-[20px]">
              description
            </span>
-           <span className="font-semibold text-ink-900 text-sm truncate max-w-[200px]">
+           <span className="font-semibold text-ink-900 text-sm truncate max-w-50">
              {resume.filename}
            </span>
         </div>
@@ -130,8 +133,8 @@ export const ChatState: React.FC<ChatStateProps> = ({
       <aside
         id="resume-sidebar"
         className={`${
-          isSidebarOpen ? "flex absolute top-[61px] bottom-0 left-0 right-0 z-40 bg-surface-50" : "hidden"
-        } lg:relative lg:top-0 lg:flex lg:w-[340px] flex-shrink-0 bg-surface-50 border-r border-border-200 p-6 flex-col justify-between overflow-y-auto`}
+          isSidebarOpen ? "flex absolute top-15.25 bottom-0 left-0 right-0 z-40 bg-surface-50" : "hidden"
+        } lg:relative lg:top-0 lg:flex lg:w-85 shrink-0 bg-surface-50 border-r border-border-200 p-6 flex-col justify-between overflow-y-auto`}
       >
         <div className="flex flex-col">
           {/* Section: Resume Identification */}
@@ -141,7 +144,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
 
           {/* Document Dossier Card */}
           <div className="bg-white rounded-xl p-4 border border-border-200 shadow-[0_8px_24px_rgba(15,23,42,0.05)] flex items-center gap-3 mb-6 transition-all hover:border-brand-600/30 group">
-            <div className="w-10 h-10 rounded-lg bg-brand-50 flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
               <span className="material-symbols-outlined text-brand-600 text-[22px]">
                 description
               </span>
@@ -154,7 +157,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
                 >
                   {resume.filename}
                 </span>
-                <span className="flex items-center gap-1.5 flex-shrink-0 bg-success-50 px-2 py-0.5 rounded-sm">
+                <span className="flex items-center gap-1.5 shrink-0 bg-success-50 px-2 py-0.5 rounded-sm">
                   <span className="w-1.5 h-1.5 rounded-full bg-success-600"></span>
                   <span className="font-label-micro text-label-micro text-success-600 font-semibold uppercase tracking-normal">
                     Ready
@@ -196,7 +199,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
               <div className="flex justify-between items-center">
                 <span className="font-label-regular text-ink-500">Pages</span>
                 <div className="flex items-center gap-3">
-                  <div className="w-16 bg-surface-50 h-1.5 rounded-full overflow-hidden flex-shrink-0">
+                  <div className="w-16 bg-surface-50 h-1.5 rounded-full overflow-hidden shrink-0">
                     <div className="bg-intel-600 h-full rounded-full transition-all duration-1000 ease-out" style={{ width: isInsightsReady ? `${((resume.pages || 1) / maxInsightVal) * 100}%` : '0%' }}></div>
                   </div>
                   <span className="font-label-regular text-ink-900 font-semibold w-8 text-right">
@@ -211,7 +214,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
               <div className="flex justify-between items-center">
                 <span className="font-label-regular text-ink-500">Chunk count</span>
                 <div className="flex items-center gap-3">
-                  <div className="w-16 bg-surface-50 h-1.5 rounded-full overflow-hidden flex-shrink-0">
+                  <div className="w-16 bg-surface-50 h-1.5 rounded-full overflow-hidden shrink-0">
                     <div className="bg-intel-600 h-full rounded-full transition-all duration-1000 ease-out" style={{ width: isInsightsReady ? `${((resume.tokenCount || 4) / maxInsightVal) * 100}%` : '0%' }}></div>
                   </div>
                   <span className="font-label-regular text-ink-900 font-semibold w-8 text-right">
@@ -226,7 +229,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
               <div className="flex justify-between items-center">
                 <span className="font-label-regular text-ink-500">Words count</span>
                 <div className="flex items-center gap-3">
-                  <div className="w-16 bg-surface-50 h-1.5 rounded-full overflow-hidden flex-shrink-0">
+                  <div className="w-16 bg-surface-50 h-1.5 rounded-full overflow-hidden shrink-0">
                     <div className="bg-intel-600 h-full rounded-full transition-all duration-1000 ease-out" style={{ width: isInsightsReady ? `${((resume.wordsCount || 399) / maxInsightVal) * 100}%` : '0%' }}></div>
                   </div>
                   <span className="font-label-regular text-ink-900 font-semibold w-8 text-right">
@@ -241,7 +244,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
               <div className="flex justify-between items-center">
                 <span className="font-label-regular text-ink-500">Lines count</span>
                 <div className="flex items-center gap-3">
-                  <div className="w-16 bg-surface-50 h-1.5 rounded-full overflow-hidden flex-shrink-0">
+                  <div className="w-16 bg-surface-50 h-1.5 rounded-full overflow-hidden shrink-0">
                     <div className="bg-intel-600 h-full rounded-full transition-all duration-1000 ease-out" style={{ width: isInsightsReady ? `${((resume.linesCount || 42) / maxInsightVal) * 100}%` : '0%' }}></div>
                   </div>
                   <span className="font-label-regular text-ink-900 font-semibold w-8 text-right">
@@ -292,7 +295,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
               </div>
               <button
                 onClick={onOpenJdModal}
-                className="text-[12px] font-medium text-brand-600 hover:underline flex-shrink-0 cursor-pointer"
+                className="text-[12px] font-medium text-brand-600 hover:underline shrink-0 cursor-pointer"
               >
                 Edit benchmark
               </button>
@@ -317,12 +320,12 @@ export const ChatState: React.FC<ChatStateProps> = ({
                     key={idx}
                     type="button"
                     onClick={() => handleSuggestionClick(inquiry)}
-                    className={`p-3.5 rounded-xl border text-[13px] text-ink-900 flex items-center justify-between gap-3 shadow-[0_8px_24px_rgba(15,23,42,0.05)] transition-all cursor-pointer group text-left min-h-[58px] h-full bg-white hover:bg-surface-50 border-border-200 hover:border-brand-300 hover:-translate-y-[1px] border-t-[3px] ${
+                    className={`p-3.5 rounded-xl border text-[13px] text-ink-900 flex items-center justify-between gap-3 shadow-[0_8px_24px_rgba(15,23,42,0.05)] transition-all cursor-pointer group text-left min-h-14.5 h-full bg-white hover:bg-surface-50 border-border-200 hover:border-brand-300 hover:-translate-y-px border-t-[3px] ${
                       idx % 2 === 0 ? "border-t-brand-600" : "border-t-intel-600"
                     }`}
                   >
                     <span className="font-medium leading-snug">{inquiry}</span>
-                    <span className="material-symbols-outlined text-brand-600 text-[18px] opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all flex-shrink-0">
+                    <span className="material-symbols-outlined text-brand-600 text-[18px] opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0">
                       arrow_forward
                     </span>
                   </TiltCard>
@@ -351,7 +354,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
                 key={msg.id}
                 className="flex flex-col items-start max-w-full lg:max-w-[76%] group"
               >
-                <div className="bg-white rounded-[16px_16px_16px_4px] p-6 shadow-[0_8px_24px_rgba(15,23,42,0.05)] border border-border-200 text-ink-900 w-full prose prose-slate max-w-none prose-p:leading-relaxed prose-li:my-1 prose-headings:font-bold min-h-[52px]">
+                <div className="bg-white rounded-[16px_16px_16px_4px] p-6 shadow-[0_8px_24px_rgba(15,23,42,0.05)] border border-border-200 text-ink-900 w-full prose prose-slate max-w-none prose-p:leading-relaxed prose-li:my-1 prose-headings:font-bold min-h-13">
                   {isLastAiMessage ? (
                     <StreamedMessage content={msg.text} />
                   ) : (
@@ -362,14 +365,14 @@ export const ChatState: React.FC<ChatStateProps> = ({
                 </div>
 
                 {typeof msg.matchPercentage === "number" && (
-                  <div className="flex items-center gap-3 mt-3 w-full max-w-[280px] pl-1">
+                  <div className="flex items-center gap-3 mt-3 w-full max-w-70 pl-1">
                     <div className="h-1.5 rounded-full bg-border-200 flex-1 overflow-hidden">
                       <div
                         className="bg-brand-600 h-full rounded-full transition-all duration-700"
                         style={{ width: `${msg.matchPercentage}%` }}
                       ></div>
                     </div>
-                    <div className="flex items-center gap-1 flex-shrink-0">
+                    <div className="flex items-center gap-1 shrink-0">
                       <span className="font-label-micro text-label-micro text-ink-500 font-medium">
                         {msg.matchPercentage}% match
                       </span>
@@ -386,7 +389,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
           {/* Live Synthesis Loading Bubble */}
           {isLoading && (
             <div className="flex flex-col items-start max-w-full lg:max-w-[76%]">
-              <div className="bg-white rounded-[16px_16px_16px_4px] py-4 px-5 shadow-none border border-border-200 w-20 flex items-center justify-center gap-1.5 h-[52px]">
+              <div className="bg-white rounded-[16px_16px_16px_4px] py-4 px-5 shadow-none border border-border-200 w-20 flex items-center justify-center gap-1.5 h-13">
                 <motion.div
                   className="w-1.5 h-1.5 rounded-full bg-brand-600/40"
                   animate={{ y: [0, -4, 0] }}
@@ -414,7 +417,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
         >
           <form
             onSubmit={handleSubmit}
-            className="relative flex-1 flex items-center bg-surface-100 border border-border-200 focus-within:ring-4 focus-within:ring-brand-500/20 focus-within:border-brand-600 focus-within:bg-white rounded-lg transition-colors px-4 py-2.5"
+            className="chat-input-cockpit"
           >
             <input
               ref={inputRef}
@@ -423,7 +426,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Ask about this resume…"
-              className="w-full bg-transparent border-none outline-none text-ink-900 placeholder:text-ink-300 font-body-md text-body-md pr-3"
+              className="chat-input-field font-body-md text-body-md"
             />
           </form>
 
@@ -433,7 +436,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
             onClick={() => handleSubmit()}
             disabled={!inputValue.trim() || isLoading}
             title="Synthesize Inquiry"
-            className="w-10 h-10 bg-gradient-to-br from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-700 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] text-white rounded-lg flex items-center justify-center transition-all flex-shrink-0 shadow-[0_2px_4px_rgba(217,119,6,0.2)] font-bold cursor-pointer hover:-translate-y-[1px]"
+            className="w-10 h-10 bg-linear-to-br from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-700 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] text-white rounded-lg flex items-center justify-center transition-all shrink-0 shadow-[0_2px_4px_rgba(217,119,6,0.2)] font-bold hover:-translate-y-px"
           >
             <span className="material-symbols-outlined text-[20px] font-bold">
               arrow_upward

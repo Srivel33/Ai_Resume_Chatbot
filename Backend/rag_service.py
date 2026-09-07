@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 client = genai.Client(
-   api_key=os.getenv("GEMINI_API_KEY")
+    api_key=os.getenv("GEMINI_API_KEY")
 )
 
 AVAILABLE_MODELS = [
@@ -17,7 +17,17 @@ AVAILABLE_MODELS = [
     "gemini-flash-latest",
 ]
 
-def generate_answer(question, context):
+# In-memory cache: (question, context_hash) -> answer
+_answer_cache = {}
+
+def generate_answer(question: str, context: str) -> str:
+    cleaned_question = question.strip()
+    cache_key = (cleaned_question.lower(), hash(context))
+
+    # Return cached answer if identical inquiry on same resume context
+    if cache_key in _answer_cache:
+        return _answer_cache[cache_key]
+
     prompt = f"""You are an AI Resume Assistant.
 
 Answer the user's question accurately and concisely using only the information provided in the resume context below.
@@ -27,10 +37,12 @@ Resume Context:
 {context if context.strip() else "No specific resume context available."}
 
 Question:
-{question}
+{cleaned_question}
 """
 
     last_error = None
+    is_quota_error = False
+
     for model_name in AVAILABLE_MODELS:
         try:
             response = client.models.generate_content(
@@ -38,11 +50,17 @@ Question:
                 contents=prompt
             )
             if response and response.text:
-                return response.text.strip()
+                result = response.text.strip()
+                _answer_cache[cache_key] = result
+                return result
         except Exception as e:
+            error_str = str(e)
+            if "429" in error_str or "RESOURCE_EXHAUSTED" in error_str or "quota" in error_str.lower():
+                is_quota_error = True
             last_error = e
             continue
 
-    return f"Unable to generate response at this time. (Error: {str(last_error)})"
+    if is_quota_error:
+        return "Daily AI request limit reached. Please try again tomorrow or retry in a few moments."
 
-
+    return "Unable to generate response at this time. Please retry in a moment."

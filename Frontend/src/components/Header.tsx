@@ -13,12 +13,12 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header
       id="app-header"
-      className="sticky top-0 z-50 w-full h-[60px] bg-white border-b border-border-200 flex items-center justify-between px-[28px] shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
+      className="sticky top-0 z-50 w-full h-15 bg-white border-b border-border-200 flex items-center justify-between px-7 shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
     >
-      <div className="flex items-center gap-[10px]">
+      <div className="flex items-center gap-2.5">
         <div
           id="brand-logo"
-          className="w-[28px] h-[28px] rounded-[6px] bg-brand-600 flex items-center justify-center flex-shrink-0 shadow-none"
+          className="w-7 h-7 rounded-md bg-brand-600 flex items-center justify-center shrink-0 shadow-none"
         >
           <span
             className="material-symbols-outlined text-white text-[16px]"
@@ -43,7 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           id="new-session-button"
           onClick={onNewSession}
-          className="text-ink-900 text-[13px] font-medium border border-border-200 rounded-lg px-[16px] py-[7px] bg-white hover:bg-surface-100 hover:border-ink-300 transition-colors cursor-pointer shadow-none active:scale-[0.98]"
+          className="text-ink-900 text-[13px] font-medium border border-border-200 rounded-lg px-4 py-1.75 bg-white hover:bg-surface-100 hover:border-ink-300 transition-colors cursor-pointer shadow-none active:scale-[0.98]"
           type="button"
         >
           New Session

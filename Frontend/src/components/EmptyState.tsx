@@ -75,7 +75,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       {/* Left Column: Dossier Ingestion Rail */}
       <section
         id="ingestion-rail"
-        className="w-full lg:w-[340px] shrink-0 bg-surface-50 border-b lg:border-b-0 lg:border-r border-border-200 p-6 flex flex-col self-stretch gap-6"
+        className="w-full lg:w-85 shrink-0 bg-surface-50 border-b lg:border-b-0 lg:border-r border-border-200 p-6 flex flex-col self-stretch gap-6"
       >
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
@@ -98,7 +98,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
               isDragging
                 ? "border-brand-600 bg-brand-50 scale-[1.01]"
                 : "border-border-200 hover:border-brand-400 bg-white hover:bg-brand-50"
-            } min-h-[220px]`}
+            } min-h-55`}
           >
             <input
               ref={fileInputRef}
@@ -168,7 +168,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
               id="browse-btn"
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="w-full py-2.5 px-4 rounded-lg bg-gradient-to-br from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-700 text-white font-medium text-[13px] text-center active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_2px_4px_rgba(217,119,6,0.2)] hover:-translate-y-[1px]"
+              className="w-full py-2.5 px-4 rounded-lg bg-linear-to-br from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-700 text-white font-medium text-[13px] text-center active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_2px_4px_rgba(217,119,6,0.2)] hover:-translate-y-px"
             >
               <span className="material-symbols-outlined text-[18px]">folder_open</span>
               Browse Files
@@ -187,7 +187,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       {/* Right Column: Interactive Process Canvas */}
       <section
         id="empty-canvas"
-        className="flex-1 bg-white bg-dot-grid flex flex-col items-center justify-center p-6 lg:p-10 min-h-[500px] lg:min-h-0 relative overflow-hidden"
+        className="flex-1 bg-white bg-dot-grid flex flex-col items-center justify-center p-6 lg:p-10 min-h-125 lg:min-h-0 relative overflow-hidden"
       >
         <div className="flex flex-col items-center justify-center text-center max-w-3xl relative z-10 px-4 w-full">
           {/* Signature Illustrated Moment */}
@@ -235,7 +235,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
             className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full text-left relative z-0"
           >
             {/* Desktop Connector Line (Animated Rail) */}
-            <div className="hidden md:flex absolute top-[40px] left-[16%] right-[16%] h-px -z-10 items-center justify-start overflow-hidden bg-transparent">
+            <div className="hidden md:flex absolute top-10 left-[16%] right-[16%] h-px -z-10 items-center justify-start overflow-hidden bg-transparent">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
@@ -250,7 +250,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.8 }}
-                className="absolute -bottom-6 -right-2 text-[140px] font-bold text-ink-900/[0.03] leading-none pointer-events-none select-none z-0 tracking-tighter"
+                className="absolute -bottom-6 -right-2 text-[140px] font-bold text-ink-900/3 leading-none pointer-events-none select-none z-0 tracking-tighter"
               >
                 01
               </motion.span>
@@ -258,7 +258,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
                 <div className="flex items-center justify-between mb-3 relative">
                   <div className="w-10 h-10 rounded-lg bg-surface-100 flex items-center justify-center text-ink-500 relative">
                     <span className="material-symbols-outlined text-[20px]">upload_file</span>
-                    <div className="absolute top-1/2 -right-[18px] w-2 h-2 rounded-full bg-intel-600 hidden md:block"></div>
+                    <div className="absolute top-1/2 -right-4.5 w-2 h-2 rounded-full bg-intel-600 hidden md:block"></div>
                   </div>
                   <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-500 bg-surface-100 px-2 py-0.5 rounded-sm">
                     STEP 01
@@ -283,7 +283,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.9 }}
-                className="absolute -bottom-6 -right-2 text-[140px] font-bold text-ink-900/[0.03] leading-none pointer-events-none select-none z-0 tracking-tighter"
+                className="absolute -bottom-6 -right-2 text-[140px] font-bold text-ink-900/3 leading-none pointer-events-none select-none z-0 tracking-tighter"
               >
                 02
               </motion.span>
@@ -291,7 +291,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
                 <div className="flex items-center justify-between mb-3 relative">
                   <div className="w-10 h-10 rounded-lg bg-intel-50 flex items-center justify-center text-intel-600 relative">
                     <span className="material-symbols-outlined text-[20px]">hub</span>
-                    <div className="absolute top-1/2 -right-[18px] w-2 h-2 rounded-full bg-intel-600 hidden md:block"></div>
+                    <div className="absolute top-1/2 -right-4.5 w-2 h-2 rounded-full bg-intel-600 hidden md:block"></div>
                   </div>
                   <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-500 bg-surface-100 px-2 py-0.5 rounded-sm">
                     STEP 02
@@ -316,7 +316,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 1.0 }}
-                className="absolute -bottom-6 -right-2 text-[140px] font-bold text-ink-900/[0.03] leading-none pointer-events-none select-none z-0 tracking-tighter"
+                className="absolute -bottom-6 -right-2 text-[140px] font-bold text-ink-900/3 leading-none pointer-events-none select-none z-0 tracking-tighter"
               >
                 03
               </motion.span>
@@ -324,7 +324,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
                 <div className="flex items-center justify-between mb-3 relative">
                   <div className="w-10 h-10 rounded-lg bg-surface-100 flex items-center justify-center text-ink-500 relative">
                     <span className="material-symbols-outlined text-[20px]">chat_bubble_outline</span>
-                    <div className="absolute top-1/2 -right-[18px] w-2 h-2 rounded-full bg-intel-600 hidden md:block"></div>
+                    <div className="absolute top-1/2 -right-4.5 w-2 h-2 rounded-full bg-intel-600 hidden md:block"></div>
                   </div>
                   <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-500 bg-surface-100 px-2 py-0.5 rounded-sm">
                     STEP 03
