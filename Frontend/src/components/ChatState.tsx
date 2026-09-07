@@ -454,7 +454,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
             onClick={() => handleSubmit()}
             disabled={!inputValue.trim() || isLoading}
             title="Synthesize Inquiry"
-            className="w-9 h-9 sm:w-10 sm:h-10 bg-linear-to-br from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-700 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] text-white rounded-lg flex items-center justify-center transition-all shrink-0 shadow-[0_2px_4px_rgba(217,119,6,0.2)] font-bold hover:-translate-y-px cursor-pointer"
+            className="chat-send-btn w-9 h-9 sm:w-10 sm:h-10 bg-linear-to-br from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-700 disabled:opacity-50 active:scale-[0.98] text-white rounded-lg flex items-center justify-center transition-all shrink-0 shadow-[0_2px_4px_rgba(217,119,6,0.2)] font-bold hover:-translate-y-px"
           >
             <ArrowUp size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
           </button>
