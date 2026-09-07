@@ -1,14 +1,14 @@
-# Virtual environment
-venv/
+# Frontend
+Frontend/node_modules/
+Frontend/dist/
 
-# Environment variables
-.env
+# Backend
+Backend/venv/
+Backend/__pycache__/
+Backend/chroma_db/
 
-# Python cache
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
+# Secrets
+Backend/.env
+Frontend/.env
+Frontend/.env.local
 
-# ChromaDB
-chroma_db/

@@ -1,5 +1,4 @@
 import os
-
 from google import genai
 from dotenv import load_dotenv
 
@@ -11,7 +10,7 @@ client = genai.Client(
 
 def generate_embedding(text):
    response = client.models.embed_content(
-       model="gemini-embedding-001",
+       model="gemini-embedding-2",
        contents=text
    )
 

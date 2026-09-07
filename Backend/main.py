@@ -1,11 +1,25 @@
 from fastapi import FastAPI, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from PyPDF2 import PdfReader
 from chunking import chunk_text
 from embedding_service import generate_embedding
-from vector_store import store_embeddings, search_embeddings
+from vector_store import store_embeddings, search_embeddings, clear_collection
 from rag_service import generate_answer
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # Allow all origins for development
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class SearchRequest(BaseModel):
+    question: str
+
 
 @app.get("/")
 def home():
@@ -15,6 +29,7 @@ def home():
 
 @app.post("/upload")
 def upload_resume(file: UploadFile = File(...)):
+   clear_collection()
    reader = PdfReader(file.file)
 
    text = ""
@@ -32,7 +47,8 @@ def upload_resume(file: UploadFile = File(...)):
    for chunk in chunks:
         vector = generate_embedding(chunk)
         embeddings.append(vector)
-        store_embeddings(chunks, embeddings)
+
+   store_embeddings(chunks, embeddings)
 
 
    return {
@@ -45,10 +61,10 @@ def upload_resume(file: UploadFile = File(...)):
     }
 
 @app.post("/search")
-def search_resume(question: str):
+def search_resume(request: SearchRequest):
 
    # Convert question into an embedding
-   query_embedding = generate_embedding(question)
+   query_embedding = generate_embedding(request.question)
 
    # Search ChromaDB
    results = search_embeddings(query_embedding)
@@ -61,7 +77,7 @@ def search_resume(question: str):
 
    # Generate AI answer
    answer = generate_answer(
-       question,
+       request.question,
        context
    )
 
@@ -69,7 +85,7 @@ def search_resume(question: str):
 
 
    return {
-       "question": question,
+       "question": request.question,
        "context": relevant_chunks,
        "answer": answer
     }

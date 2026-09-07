@@ -8,13 +8,18 @@ collection = client.get_or_create_collection(
    name="resume_collection"
 )
 
+def clear_collection():
+   global collection
+   client.delete_collection("resume_collection")
+   collection = client.get_or_create_collection(name="resume_collection")
+
 def store_embeddings(chunks, embeddings):
    ids = []
 
    for i in range(len(chunks)):
        ids.append(f"chunk_{i}")
 
-   collection.add(
+   collection.upsert(
        ids=ids,
        documents=chunks,
        embeddings=embeddings
