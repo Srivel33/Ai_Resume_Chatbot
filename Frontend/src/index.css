@@ -70,6 +70,23 @@
   letter-spacing: -0.025em;
 }
 
+/* Hide Netlify Drawer / Feedback Badge / Powered by Netlify badge */
+a[href*="netlify.com"],
+.netlify-badge,
+#netlify-badge,
+[class*="netlify-badge"],
+[id*="netlify-badge"],
+iframe#netlify-drawer-iframe,
+#netlify-drawer,
+[data-netlify-deploy-preview-panel],
+div[class*="netlify-drawer"],
+.netlify-drawer-container {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
 /* Material Symbols alignment helper */
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
