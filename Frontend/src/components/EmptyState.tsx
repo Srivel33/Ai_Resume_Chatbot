@@ -267,7 +267,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="text-[28px] sm:text-[34px] font-bold text-ink-900 leading-tight tracking-tight mb-2"
+            className="text-[20px] sm:text-[24px] lg:text-[26px] font-bold text-ink-900 leading-tight tracking-tight mb-2"
           >
             AI Resume Q&A — Ask Anything About Your Resume
           </motion.h1>

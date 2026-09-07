@@ -107,32 +107,61 @@ export const ChatState: React.FC<ChatStateProps> = ({
   return (
     <div
       id="chat-screen"
-      className="flex flex-col lg:flex-row w-full h-[calc(100vh-60px)] overflow-hidden bg-surface-50 relative"
+      className="flex flex-col lg:flex-row w-full h-[calc(100dvh-60px)] max-h-[calc(100dvh-60px)] overflow-hidden bg-surface-50 relative"
     >
-      {/* Mobile Header */}
-      <div className="lg:hidden flex items-center justify-between p-4 bg-white border-b border-border-200 z-30 shrink-0 shadow-sm">
-        <div className="flex items-center gap-2">
-           <FileText size={20} className="text-brand-600 shrink-0" />
-           <span className="font-semibold text-ink-900 text-sm truncate max-w-50">
-             {resume.filename}
-           </span>
+      {/* Mobile Sub-Header */}
+      <div className="lg:hidden flex items-center justify-between px-3.5 py-2.5 bg-white border-b border-border-200 z-30 shrink-0 shadow-xs">
+        <div className="flex items-center gap-2 min-w-0">
+          <FileText size={18} className="text-brand-600 shrink-0" />
+          <span className="font-semibold text-ink-900 text-xs sm:text-sm truncate max-w-50">
+            {resume.filename}
+          </span>
+          <span className="flex items-center gap-1 shrink-0 bg-success-50 px-1.5 py-0.5 rounded text-[10px] text-success-600 font-semibold uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-success-600"></span>
+            Ready
+          </span>
         </div>
         <button
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="text-ink-500 hover:text-ink-900 bg-surface-100 p-1.5 rounded-lg flex items-center justify-center transition-colors cursor-pointer"
+          onClick={() => setIsSidebarOpen(true)}
+          className="text-ink-600 hover:text-ink-900 bg-surface-100 hover:bg-surface-200 p-1.5 rounded-lg flex items-center gap-1.5 text-xs font-medium transition-colors cursor-pointer"
+          title="View Resume Insights"
+          type="button"
         >
-          {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+          <Menu size={16} />
+          <span className="hidden xs:inline">Details</span>
         </button>
       </div>
 
-      {/* Left column (Resume Reference & Tactical Prompts) */}
+      {/* Mobile Drawer Backdrop */}
+      {isSidebarOpen && (
+        <div
+          onClick={() => setIsSidebarOpen(false)}
+          className="lg:hidden fixed inset-0 bg-ink-900/50 backdrop-blur-xs z-40 transition-opacity"
+        />
+      )}
+
+      {/* Left Column (Resume Reference & Tactical Prompts) - Slide-over on mobile, Static on desktop */}
       <aside
         id="resume-sidebar"
         className={`${
-          isSidebarOpen ? "flex absolute top-26 bottom-0 left-0 right-0 z-40 bg-surface-50" : "hidden"
-        } lg:relative lg:top-0 lg:flex lg:w-85 shrink-0 bg-surface-50 border-r border-border-200 p-4 sm:p-6 flex-col justify-between overflow-y-auto`}
+          isSidebarOpen
+            ? "fixed inset-y-0 right-0 w-80 max-w-[85vw] z-50 shadow-2xl flex"
+            : "hidden"
+        } lg:relative lg:inset-auto lg:z-auto lg:shadow-none lg:flex lg:w-85 shrink-0 bg-surface-50 border-l lg:border-l-0 lg:border-r border-border-200 p-4 sm:p-6 flex-col justify-between overflow-y-auto transition-all`}
       >
         <div className="flex flex-col">
+          {/* Mobile Drawer Header */}
+          <div className="flex items-center justify-between lg:hidden mb-4 pb-3 border-b border-border-200">
+            <span className="font-semibold text-ink-900 text-sm">Resume Details</span>
+            <button
+              onClick={() => setIsSidebarOpen(false)}
+              className="p-1 rounded-lg text-ink-500 hover:text-ink-900 hover:bg-surface-100 cursor-pointer"
+              type="button"
+            >
+              <X size={18} />
+            </button>
+          </div>
+
           {/* Section: Resume Identification */}
           <span className="font-label-micro text-label-micro text-ink-500 uppercase tracking-[0.2em] mb-4 select-none font-semibold">
             YOUR RESUME
@@ -263,12 +292,12 @@ export const ChatState: React.FC<ChatStateProps> = ({
       </aside>
 
       {/* Right Column (Executive Synthesis & Intelligence Stream) */}
-      <section className="flex-1 bg-white bg-dot-grid flex flex-col h-full justify-between relative overflow-hidden">
+      <section className="flex-1 bg-white bg-dot-grid flex flex-col h-full min-h-0 justify-between relative overflow-hidden">
         {/* Conversation Stage */}
         <div
           ref={chatThreadRef}
           id="chatThread"
-          className="flex-1 overflow-y-auto px-4 sm:px-6 py-5 sm:py-8 lg:px-12 space-y-6 flex flex-col"
+          className="flex-1 overflow-y-auto min-h-0 px-3 sm:px-6 py-4 sm:py-8 lg:px-12 space-y-4 sm:space-y-6 flex flex-col"
         >
 
 
@@ -292,31 +321,33 @@ export const ChatState: React.FC<ChatStateProps> = ({
 
           {/* Messages Stream */}
           {messages.length === 0 && (
-            <div className="my-auto flex flex-col items-center text-center max-w-2xl mx-auto py-3 sm:py-6 px-3 sm:px-4 w-full relative z-10">
-              <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full border-2 border-intel-600 bg-brand-50 flex items-center justify-center text-brand-600 mb-2 sm:mb-3 shadow-none">
-                <MessageSquare size={22} />
+            <div className="my-auto flex flex-col items-center text-center max-w-lg mx-auto py-4 sm:py-8 px-2 sm:px-4 w-full relative z-10">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-brand-200 bg-brand-50 flex items-center justify-center text-brand-600 mb-2 sm:mb-3 shadow-xs">
+                <MessageSquare size={20} className="sm:w-5 sm:h-5 text-brand-600" />
               </div>
-              <h3 className="font-headline-sm font-bold text-ink-900 text-[15px] sm:text-[18px] mb-0.5 sm:mb-1">
+              <h3 className="font-headline-sm font-bold text-ink-900 text-[16px] sm:text-[19px] mb-1 sm:mb-1.5">
                 Ask about {resume.candidateName || "this resume"}
               </h3>
-              <p className="text-[12px] sm:text-[13px] text-ink-500 mb-3 sm:mb-5 max-w-md hidden sm:block">
-                Click any common question below to search the resume embeddings, or type your own question:
+              <p className="text-[12px] sm:text-[13px] text-ink-500 mb-4 sm:mb-6 max-w-sm">
+                Tap a question below or type your inquiry in the chat box:
               </p>
-              <p className="text-[11px] text-ink-500 mb-3 sm:hidden">
-                Tap a question or type below:
-              </p>
-              <div className="grid grid-cols-2 gap-2 sm:gap-3 w-full text-left">
-                {resume.suggestedInquiries.map((inquiry, idx) => (
+              <div className="flex flex-col sm:grid sm:grid-cols-2 gap-2.5 sm:gap-3 w-full text-left">
+                {resume.suggestedInquiries.slice(0, 6).map((inquiry, idx) => (
                   <TiltCard
                     key={idx}
                     type="button"
                     onClick={() => handleSuggestionClick(inquiry)}
-                    className={`p-2.5 sm:p-3.5 rounded-xl border text-[11.5px] sm:text-[13px] text-ink-900 flex items-center justify-between gap-2 shadow-[0_8px_24px_rgba(15,23,42,0.05)] transition-all cursor-pointer group text-left min-h-12 sm:min-h-14.5 h-full bg-white hover:bg-surface-50 border-border-200 hover:border-brand-300 hover:-translate-y-px border-t-[3px] ${
-                      idx % 2 === 0 ? "border-t-brand-600" : "border-t-intel-600"
+                    className={`p-3.5 sm:p-4 rounded-xl border border-border-200 hover:border-brand-400 bg-white hover:bg-brand-50/20 text-[13px] sm:text-[13.5px] text-ink-900 items-center justify-between gap-3 shadow-[0_2px_8px_rgba(15,23,42,0.04)] hover:shadow-md transition-all cursor-pointer group text-left min-h-13 sm:min-h-15 ${
+                      idx >= 3 ? "hidden sm:flex" : "flex"
                     }`}
                   >
-                    <span className="font-medium leading-snug line-clamp-3">{inquiry}</span>
-                    <ArrowRight size={16} className="text-brand-600 opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0" />
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${idx % 2 === 0 ? "bg-brand-600" : "bg-intel-600"}`}></span>
+                      <span className="font-semibold text-ink-900 leading-snug">{inquiry}</span>
+                    </div>
+                    <div className="w-6 h-6 rounded-full bg-surface-100 group-hover:bg-brand-100 flex items-center justify-center text-ink-400 group-hover:text-brand-600 transition-colors shrink-0">
+                      <ArrowRight size={13} />
+                    </div>
                   </TiltCard>
                 ))}
               </div>
@@ -327,8 +358,8 @@ export const ChatState: React.FC<ChatStateProps> = ({
             if (msg.sender === "user") {
               return (
                 <div key={msg.id} className="flex justify-end w-full pt-2">
-                  <div className="bg-ink-900 border border-ink-900 rounded-[16px_16px_4px_16px] px-6 py-4 max-w-[85%] sm:max-w-[65%] shadow-none">
-                    <p className="font-body-md text-body-md text-white leading-relaxed font-normal">
+                  <div className="bg-ink-900 border border-ink-900 rounded-[18px_18px_4px_18px] px-4.5 py-3 sm:px-6 sm:py-4 max-w-[88%] sm:max-w-[70%] shadow-none">
+                    <p className="text-[13.5px] sm:font-body-md text-white leading-relaxed font-normal">
                       {msg.text}
                     </p>
                   </div>
@@ -341,9 +372,9 @@ export const ChatState: React.FC<ChatStateProps> = ({
             return (
               <div
                 key={msg.id}
-                className="flex flex-col items-start max-w-full lg:max-w-[76%] group"
+                className="flex flex-col items-start w-full max-w-full lg:max-w-[80%] group"
               >
-                <div className="bg-white rounded-[16px_16px_16px_4px] p-6 shadow-[0_8px_24px_rgba(15,23,42,0.05)] border border-border-200 text-ink-900 w-full prose prose-slate max-w-none prose-p:leading-relaxed prose-li:my-1 prose-headings:font-bold min-h-13">
+                <div className="bg-white rounded-[18px_18px_18px_4px] p-4.5 sm:p-6 shadow-[0_8px_24px_rgba(15,23,42,0.05)] border border-border-200 text-ink-900 w-full prose prose-slate max-w-none prose-p:leading-relaxed prose-li:my-1 prose-headings:font-bold min-h-13 text-[13.5px] sm:text-base">
                   {isLastAiMessage ? (
                     <StreamedMessage content={msg.text} />
                   ) : (
@@ -400,7 +431,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
         {/* Input Dispatch Cockpit (Bottom Dock) */}
         <footer
           id="chat-dock"
-          className="min-h-18 bg-white px-3 sm:px-4 lg:px-12 py-3 flex items-center gap-2 sm:gap-3 lg:gap-4 border-t border-border-200 z-20 shrink-0 pb-[max(12px,env(safe-area-inset-bottom))]"
+          className="min-h-14 sm:min-h-18 bg-white px-3 sm:px-4 lg:px-12 py-2 sm:py-3 flex items-center gap-2 sm:gap-3 lg:gap-4 border-t border-border-200 z-20 shrink-0 pb-[max(10px,env(safe-area-inset-bottom))]"
         >
           <form
             onSubmit={handleSubmit}
@@ -413,7 +444,7 @@ export const ChatState: React.FC<ChatStateProps> = ({
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Ask about this resume…"
-              className="chat-input-field font-body-md text-body-md"
+              className="chat-input-field text-sm sm:font-body-md sm:text-body-md"
             />
           </form>
 
@@ -423,9 +454,9 @@ export const ChatState: React.FC<ChatStateProps> = ({
             onClick={() => handleSubmit()}
             disabled={!inputValue.trim() || isLoading}
             title="Synthesize Inquiry"
-            className="w-10 h-10 bg-linear-to-br from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-700 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] text-white rounded-lg flex items-center justify-center transition-all shrink-0 shadow-[0_2px_4px_rgba(217,119,6,0.2)] font-bold hover:-translate-y-px"
+            className="w-9 h-9 sm:w-10 sm:h-10 bg-linear-to-br from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-700 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] text-white rounded-lg flex items-center justify-center transition-all shrink-0 shadow-[0_2px_4px_rgba(217,119,6,0.2)] font-bold hover:-translate-y-px cursor-pointer"
           >
-            <ArrowUp size={20} strokeWidth={2.5} />
+            <ArrowUp size={18} className="sm:w-5 sm:h-5" strokeWidth={2.5} />
           </button>
         </footer>
       </section>
